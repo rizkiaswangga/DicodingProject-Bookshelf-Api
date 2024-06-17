@@ -21,7 +21,7 @@ const addBookHandler = (request, h) => {
             status: 'success',
             message: 'Buku berhasil ditambahkan',
             data: {
-                bookID: id,
+                bookId: id,
             },
         });
         response.code(201);
@@ -36,4 +36,18 @@ const addBookHandler = (request, h) => {
     return response;
 };
 
-module.exports = { addBookHandler };
+const getAllBooksHandler = () => {
+    const displayTotalSummarizedBooks = books.map(books => ({
+        id: books.id,
+        name: books.name,
+        publisher: books.publisher
+    }));
+
+    return {
+        status: "success",
+        data: {
+            books: displayTotalSummarizedBooks
+        }
+    };
+};
+module.exports = { addBookHandler, getAllBooksHandler };
