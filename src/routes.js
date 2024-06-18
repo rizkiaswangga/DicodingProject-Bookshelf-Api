@@ -1,4 +1,4 @@
-const { addBookHandler, getAllBooksHandler, getBookByIdHandler } = require('./handler')
+const { addBookHandler, getAllBooksHandler, getBookByIdHandler, editBookByIdHandler, deleteBookByIdHandler } = require('./handler')
 
 const routes = [
     // API menyimpan buku :
@@ -20,6 +20,20 @@ const routes = [
         method: 'GET',
         path: `/books/{bookId}`,
         handler: getBookByIdHandler,
+    },
+
+    // API Mengubah data buku :
+    {
+        method: 'PUT',
+        path: `/books/{bookId}`,
+        handler: editBookByIdHandler,
+    },
+
+    // API menghapus buku :
+    {
+        method: 'DELETE',
+        path: `/books/{bookId}`,
+        handler: deleteBookByIdHandler,
     }
 ]
 
