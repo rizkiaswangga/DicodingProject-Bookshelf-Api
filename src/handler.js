@@ -12,6 +12,8 @@ const addBookHandler = (request, h) => {
         id, name, year, author, summary, publisher, pageCount, readPage, finished, reading, insertedAt, updatedAt
     }
 
+    console.log(newBook);
+
     if ( newBook.name == undefined ){
         const response = h.response({
             status: 'fail',
@@ -56,11 +58,34 @@ const addBookHandler = (request, h) => {
     return response;
 };
 
-const getAllBooksHandler = () => {
-    const displayTotalSummarizedBooks = books.map(books => ({
-        id: books.id,
-        name: books.name,
-        publisher: books.publisher
+const getAllBooksHandler = (request, h) => {
+    const { reading, finished, name} = request.query;
+    console.log(reading, finished, name);
+    
+
+    let filteredBooks = books;
+    console.log(filteredBooks);
+
+    const toBoolean = (value) => {
+        return value === '1';
+    }
+
+    if (reading !== undefined){
+        filteredBooks = filteredBooks.filter(book => book.reading === (toBoolean(reading)));
+    }
+    if (finished !== undefined){
+        filteredBooks = filteredBooks.filter(book => book.finished === (toBoolean(finished)));
+    }
+
+    if (name !== undefined){
+        const searchName = name.toLowerCase();
+        filteredBooks = filteredBooks.filter(book => book.name.toLowerCase().includes(searchName));
+    }
+
+    const displayTotalSummarizedBooks = filteredBooks.map(book => ({
+        id: book.id,
+        name: book.name,
+        publisher: book.publisher
     }));
 
     return {
@@ -119,6 +144,7 @@ const editBookByIdHandler = (request, h) => {
     }
 
     const index = books.findIndex((book) => book.id === bookId);
+    const updatedAt = new Date().toString();
 
     if(index !== -1){
         books[index] = {
@@ -131,6 +157,7 @@ const editBookByIdHandler = (request, h) => {
             pageCount,
             readPage,
             reading,
+            updatedAt
         };
 
         const response = h.response({
@@ -172,4 +199,4 @@ const deleteBookByIdHandler = (request, h) => {
     response.code(404);
     return response;
 };
-module.exports = { addBookHandler, getAllBooksHandler, getBookByIdHandler, editBookByIdHandler,deleteBookByIdHandler };
+module.exports = { addBookHandler, getAllBooksHandler, getBookByIdHandler, editBookByIdHandler, deleteBookByIdHandler};

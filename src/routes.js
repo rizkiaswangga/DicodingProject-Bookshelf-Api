@@ -1,4 +1,5 @@
-const { addBookHandler, getAllBooksHandler, getBookByIdHandler, editBookByIdHandler, deleteBookByIdHandler } = require('./handler')
+const { addBookHandler, getAllBooksHandler, getBookByIdHandler, editBookByIdHandler, deleteBookByIdHandler } = require('./handler');
+
 
 const routes = [
     // API menyimpan buku :
@@ -34,7 +35,7 @@ const routes = [
         method: 'DELETE',
         path: `/books/{bookId}`,
         handler: deleteBookByIdHandler,
-    }
+    },
 ]
 
 module.exports = routes;
