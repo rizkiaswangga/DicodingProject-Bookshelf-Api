@@ -1,5 +1,5 @@
 const books = require('./books');
-const { idNotFound, wrongRequirements, success } = require ('./handlerResponse');
+const { failAddBook, idNotFound, wrongRequirements, success } = require ('./handlerResponse');
 const { nanoid } = require('nanoid');
 
 const addBookHandler = (request, h) => {
@@ -28,12 +28,7 @@ const addBookHandler = (request, h) => {
         return success(h, 'Buku berhasil ditambahkan', 201, { bookId: id });
     }
 
-    const response = h.response({
-        status: 'fail',
-        message: 'Buku gagal ditambahkan',
-    });
-    response.code(500);
-    return response;
+    return failAddBook(h, 'Buku gagal ditambahkan');
 };
 
 const getAllBooksHandler = (request, h) => {
