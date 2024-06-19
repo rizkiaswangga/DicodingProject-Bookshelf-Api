@@ -1,3 +1,4 @@
+// Import handler:
 const { addBookHandler, getAllBooksHandler, getBookByIdHandler, editBookByIdHandler, deleteBookByIdHandler } = require('./handler');
 
 
@@ -38,4 +39,5 @@ const routes = [
     },
 ]
 
+// Export routes :
 module.exports = routes;
