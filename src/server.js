@@ -1,5 +1,7 @@
+// Import Hapi :
 const Hapi = require('@hapi/hapi');
 
+// Import routes yang akan digunakan :
 const routes = require('./routes');
 
 const init = async () => {
@@ -19,4 +21,5 @@ const init = async () => {
   console.log(`Server berjalan pada ${server.info.uri}`);
 };
 
+// Panggil fungsi server :
 init();

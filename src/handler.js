@@ -1,9 +1,14 @@
+// import nanoid :
 const { nanoid } = require('nanoid');
+// Import lokasi books :
 const books = require('./books');
+
+// Import response :
 const {
   failAddBook, idNotFound, wrongRequirements, success,
 } = require('./handlerResponse');
 
+// Fungsi untuk menambahkan buku :
 const addBookHandler = (request, h) => {
   const {
     name, year, author, summary, publisher, pageCount, readPage, reading,
@@ -46,12 +51,13 @@ const addBookHandler = (request, h) => {
   return failAddBook(h, 'Buku gagal ditambahkan');
 };
 
+/* Fungsi untuk melihat semua buku, beserta menampilkan
+buku berdasarkan query (jika digunakan) (tugas opsional) : */
 const getAllBooksHandler = (request, h) => {
   const { reading, finished, name } = request.query;
   console.log(reading, finished, name);
 
   let filteredBooks = books;
-  console.log(filteredBooks);
 
   const toBoolean = (value) => value === '1';
 
@@ -76,6 +82,7 @@ const getAllBooksHandler = (request, h) => {
   return success(h, undefined, undefined, { books: displayTotalSummarizedBooks });
 };
 
+// Fungsi untuk mendapatkan buku, berdasarkan ID :
 const getBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
 
@@ -88,6 +95,7 @@ const getBookByIdHandler = (request, h) => {
   return idNotFound(h, 'Buku tidak ditemukan');
 };
 
+// Fungsi untuk mengubah/edit buku berdasarkan ID :
 const editBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
 
@@ -125,16 +133,20 @@ const editBookByIdHandler = (request, h) => {
   return idNotFound(h, 'Gagal memperbarui buku. Id tidak ditemukan');
 };
 
+// Funsgi untuk menghapus buku berdasarkan ID :
 const deleteBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
   const index = books.findIndex((book) => book.id === bookId);
 
   if (index !== -1) {
+    books.splice(index, 1);
     return success(h, 'Buku berhasil dihapus', undefined, undefined);
   }
 
   return idNotFound(h, 'Buku gagal dihapus. Id tidak ditemukan');
 };
+
+// Export funsgi, agar bisa digunakan di routes :
 module.exports = {
   addBookHandler,
   getAllBooksHandler,

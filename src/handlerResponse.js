@@ -1,3 +1,7 @@
+/* Fungsi  ini akan dipanggil setiap kali server ingin membrikan response,
+parameter berbeda tergantung jenis response : */
+
+// Fungsi ini bertugas memngirimkan response berdasarkan parameter yang diinginkan :
 const createResponse = (h, status, message, responseCode = 500, data = null) => {
   const responseData = {
     status,
@@ -14,6 +18,8 @@ const createResponse = (h, status, message, responseCode = 500, data = null) => 
   response.code(responseCode);
   return response;
 };
+
+// export setiap object property yang akan digunakan untuk membuat response :
 module.exports = {
   failAddBook: (h, message) => createResponse(h, 'fail', message),
   idNotFound: (h, message) => createResponse(h, 'fail', message, 404),
